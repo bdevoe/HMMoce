@@ -45,22 +45,26 @@ get.hycom <- function(limits, time, vars=c('water_temp'), include_latlon=TRUE,
   ## period for this experiment, then print a warning and truncate the output
   ## early.
   
+  # bdevoe - added /GLBu0.08/expt_93.0 to fill in date gap
   expts = data.frame(
-    start=c(as.Date('1992-10-02'), as.Date('1995-08-01'),
-            as.Date('2013-01-01'), as.Date('2013-08-20'),
-            as.Date('2014-04-05'), as.Date('2016-04-18'),
-            as.Date('2018-12-04')),
-    end=c(as.Date('1995-07-31'), as.Date('2012-12-31'),
-          as.Date('2013-08-19'), as.Date('2014-04-04'),
-          as.Date('2016-04-17'), as.Date('2018-11-20'),
-          Sys.Date() + 1),
-    url=c('http://ncss.hycom.org/thredds/ncss/GLBu0.08/expt_19.0/',
-          'http://ncss.hycom.org/thredds/ncss/GLBu0.08/expt_19.1/',
-          'http://ncss.hycom.org/thredds/ncss/GLBu0.08/expt_90.9?',
-          'http://ncss.hycom.org/thredds/ncss/GLBu0.08/expt_91.0?',
-          'http://ncss.hycom.org/thredds/ncss/GLBu0.08/expt_91.1?',
-          'http://ncss.hycom.org/thredds/ncss/GLBu0.08/expt_91.2?',
-          'http://ncss.hycom.org/thredds/ncss/GLBy0.08/expt_93.0?'))
+  start=c(as.Date('1992-10-02'), as.Date('1995-08-01'),
+          as.Date('2013-01-01'), as.Date('2013-08-20'),
+          as.Date('2014-04-05'), as.Date('2016-04-18'),
+          as.Date('2018-11-21'),
+          as.Date('2018-12-04')),
+  end=c(as.Date('1995-07-31'), as.Date('2012-12-31'),
+        as.Date('2013-08-19'), as.Date('2014-04-04'),
+        as.Date('2016-04-17'), as.Date('2018-11-20'),
+        as.Date('2018-12-03'),
+        Sys.Date() + 1),
+  url=c('http://ncss.hycom.org/thredds/ncss/GLBu0.08/expt_19.0/',
+        'http://ncss.hycom.org/thredds/ncss/GLBu0.08/expt_19.1/',
+        'http://ncss.hycom.org/thredds/ncss/GLBu0.08/expt_90.9?',
+        'http://ncss.hycom.org/thredds/ncss/GLBu0.08/expt_91.0?',
+        'http://ncss.hycom.org/thredds/ncss/GLBu0.08/expt_91.1?',
+        'http://ncss.hycom.org/thredds/ncss/GLBu0.08/expt_91.2?',
+        'http://ncss.hycom.org/thredds/ncss/GLBu0.08/expt_93.0?',
+        'http://ncss.hycom.org/thredds/ncss/GLBy0.08/expt_93.0?'))
   
   if(time[1] < expts$start[1])
     stop('Data begins at %s and is not available at %s.',

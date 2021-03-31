@@ -30,7 +30,7 @@
 #' @seealso \code{\link{calc.sst.par}}
 #'   
 
-calc.bottomTemp.par <- function(tag.bt, filename, bt.dir, dateVec, focalDim = NULL, sens.err = 1, varName = 'Temperature', ncores = NULL){
+calc.bottomTemp.par <- function(tag.bt, filename, bt.dir, dateVec, focalDim = NULL, sens.err = 1, varName = 'water_temp', ncores = NULL){
   
   print(paste('Starting bottom temperature likelihood calculation...'))
   
@@ -63,15 +63,15 @@ calc.bottomTemp.par <- function(tag.bt, filename, bt.dir, dateVec, focalDim = NU
   for(ii in 0:nmax) ncnames[ii + 1] <- RNetCDF::var.inq.nc(nc1, ii)$name
   nameidx <- grep(varName, ncnames, ignore.case = TRUE) - 1
   dat <- RNetCDF::var.get.nc(nc1, nameidx)
-  lon <- RNetCDF::var.get.nc(nc1, 'longitude')
-  lat <- RNetCDF::var.get.nc(nc1, 'latitude')
+  lon <- RNetCDF::var.get.nc(nc1, 'lon')
+  lat <- RNetCDF::var.get.nc(nc1, 'lat')
   
   # result will be array of likelihood surfaces
   L.bt <- array(0, dim = c(length(lon), length(lat), length(dateVec)))
   
   # calc sd of bt
   # focal calc on mean temp and write to sd var
-  r = raster::flip(raster::raster(t(dat), xmn=min(lon), xmx=max(lon),
+  r = raster::flip(raster::raster(t(as.matrix(dat)), xmn=min(lon), xmx=max(lon),
                                   ymn=min(lat), ymx=max(lat)), 2)
   
   # check for coarse enough resolution that our calculations wont take all day
@@ -122,7 +122,7 @@ calc.bottomTemp.par <- function(tag.bt, filename, bt.dir, dateVec, focalDim = NU
     
     # calc sd of bt
     # focal calc on mean temp and write to sd var
-    r <- raster::flip(raster::raster(t(dat), xmn=min(lon), xmx=max(lon),
+    r <- raster::flip(raster::raster(t(as.matrix(dat)), xmn=min(lon), xmx=max(lon),
                                      ymn=min(lat), ymx=max(lat)), 2)
     
     if(round(raster::res(r)[1], 2) < 0.1){

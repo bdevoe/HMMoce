@@ -157,18 +157,19 @@ calc.bottomTemp.par <- function(tag.bt, filename, bt.dir, dateVec, focalDim = NU
   
   crs <- "+proj=longlat +datum=WGS84 +ellps=WGS84"
   list.bt <- list(x = lon.agg, y = lat.agg, z = L.bt)
-  ex <- raster::extent(list.bt)
-  L.bt <- raster::brick(list.bt$z, xmn=ex[1], xmx=ex[2], ymn=ex[3], ymx=ex[4], transpose=T, crs)
-  L.bt <- raster::flip(L.bt, direction = 'y')
+  #ex <- raster::extent(list.bt)
+  #L.bt <- raster::brick(list.bt$z, xmn=ex[1], xmx=ex[2], ymn=ex[3], ymx=ex[4], transpose=T, crs)
+  #L.bt <- raster::flip(L.bt, direction = 'y')
   
-  L.bt[L.bt < 0] <- 0
+  #L.bt[L.bt < 0] <- 0
   
-  names(L.bt) <- as.character(dateVec)
+  #names(L.bt) <- as.character(dateVec)
   
   t1 <- Sys.time()
   print(paste('Bottom temperature calculations took ', round(as.numeric(difftime(t1, t0, units='mins')), 2), 'minutes...'))
   
   # return bt likelihood surfaces
-  return(L.bt)
+  #return(L.bt)
+  return(list.bt)
   
 }
